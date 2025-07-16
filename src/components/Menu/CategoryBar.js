@@ -2,7 +2,6 @@ import { useTrail, animated } from '@react-spring/web';
 import {
     CategoryWrapper,
     CategoryButton,
-    LogoContainer,
     CategoryContainer
 } from '../../styles/Menu/CategoryBarStyle';
 
@@ -31,13 +30,14 @@ const CategoryBar = ({ categories, selectedCategory, onSelectCategory, logoSrc }
     return (
         <CategoryWrapper>
             {/* 로고 영역 */}
+            {/* 
             <LogoContainer>
                 <img
                     src={logoSrc}
                     alt="Barion Kiosk Logo"
                 />
             </LogoContainer>
-
+*/}
             {/* 카테고리 영역 */}
             <CategoryContainer>
                 {categoryTrail.map((style, index) => (
