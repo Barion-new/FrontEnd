@@ -26,16 +26,17 @@ export let menuItems = {
     content: []
 };
 
+// TODO: MARK: 【메뉴데이터 포인트 1】 백엔드로부터 메뉴 데이터 로드
 // 백엔드 API에서 메뉴 데이터를 가져오는 함수
 export const fetchMenuItems = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/menus`);
+        const response = await fetch(`${API_BASE_URL}/api/menus`); // ← 모든 메뉴데이터 GET 요청
 
         if (!response.ok) {
             throw new Error(`API 요청 실패: ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = await response.json(); // ← JSON파싱 -> js객체형태: 백엔드로부터 전달받은 데이터베이스 상의 모든 메뉴 데이터 받기
 
         // API 응답 구조가 원래 구조와 호환되도록 필요한 필드 매핑
         data.content = data.content.map(item => ({
@@ -47,6 +48,7 @@ export const fetchMenuItems = async () => {
         menuItems = data;
 
         // 로컬 스토리지에 저장 - 이 부분을 추가
+        // TODO: MARK: 【메뉴데이터 포인트 2】로컬 스토리지 메뉴데이터를 저장. 영속성 유지(모든 페이지에서 접근 가능)
         localStorage.setItem('menuData', JSON.stringify(data));
 
         console.log("메뉴 데이터 API 통해 로드 완료:", menuItems.content.length);

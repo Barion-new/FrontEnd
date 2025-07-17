@@ -1,3 +1,4 @@
+
 // 오디오 관련 코드 주석 처리 및 querySelector 수정
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
@@ -30,7 +31,10 @@ const VoiceCommandPortal = ({ children }) => {
 };
 
 /**
- * 음성 명령 시스템 핵심 컴포넌트
+ * // TODO: MARK: 【음성 주문시스템 포인트 2】 Picovoice AI 엔진 활용한 음성 인식 시스템
+ * 🎯 핵심: Picovoice AI로 웨이크워드 감지 + 음성 명령 인식
+ * Porcupine: 웨이크워드 'Hey Barion' 감지
+ * Rhino: 음성 명령을 Intent + Slot으로 변환
  */
 const VoiceCommandSystem = () => {
     const navigate = useNavigate();
@@ -188,8 +192,9 @@ const VoiceCommandSystem = () => {
     }, []);
 
     // 3. 웨이크워드 감지 처리 수정
+    // TODO: MARK: 【음성 주문시스템 포인트 3】 Porcupine 웨이크워드 감지 처리 부분
     useEffect(() => {
-        if (keywordDetection !== null) {
+        if (keywordDetection !== null) { // ← Porcupine이 "Hey Barion" 감지하면 Wakeword 감지됨으로 간주
             const now = Date.now();
 
             // 중복 감지 방지 로직
@@ -222,7 +227,7 @@ const VoiceCommandSystem = () => {
             }
 
             // 음성 명령 인식 모드로 전환
-            startCommandMode();
+            startCommandMode(); //TODO: ← 여기서 Rhino 시작!
 
             // 10초 후 웨이크워드 감지 모드로 복귀
             wakewordTimeoutRef.current = setTimeout(() => {
@@ -233,6 +238,7 @@ const VoiceCommandSystem = () => {
         }
     }, [keywordDetection]);  // publish 의존성 제거
 
+    // TODO: MARK: 【음성 주문시스템 포인트 5】 Rhino 음성 명령 결과 처리 - 발화를 Intent+Slot으로 변환
     // 4. 음성 명령 결과 처리 - 인식 실패 시 안내음 추가
     useEffect(() => {
         if (internalCommandResult !== null) {
@@ -269,6 +275,7 @@ const VoiceCommandSystem = () => {
     };
 
     // 6. 음성 명령 인식 모드 시작
+    // TODO: MARK: 【음성 주문시스템 포인트 4】 웨이크워드 감지 후 사용자 명령 인식 모드로 전환(Rhino 시작)
     const startCommandMode = async () => {
         if (commandLoaded && !rhinoIsListening && !commandError) {
             try {
@@ -351,6 +358,7 @@ const VoiceCommandSystem = () => {
         return result;
     };
 
+    // TODO: MARK: 【음성 주문시스템 포인트 6】Rhino가 사용자의 발화 -> intent 변환 후 해당 사용자의 명령 처리
     // 10. 음성 명령에 반응하여 이벤트 발생 처리 - 각 상황별 음성 안내 추가
     useEffect(() => {
         if (!commandResult || !commandResult.isUnderstood) return;

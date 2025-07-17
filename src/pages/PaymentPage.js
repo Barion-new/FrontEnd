@@ -52,6 +52,7 @@ const PaymentPage = () => {
         fetchPaymentWidgets();
     }, []);
 
+    // TODO: MARK: 【tosspayments 포인트 1】토스페이먼츠 위젯 렌더링(결제 가격 설정, 카드, 계좌이체, 간편결제 등 결제 수단 불러오기)
     // 결제위젯 렌더링
     useEffect(() => {
         if (!widgets || loading) return;
@@ -79,6 +80,8 @@ const PaymentPage = () => {
 
     // 결제 요청 처리 함수
     // 결제 요청 처리 함수를 useCallback으로 메모이제이션
+
+    // TODO: MARK: 【tosspayments 포인트 2】주문 정보를 기반으로 실제 결제 요청을 처리
     const handlePaymentRequest = useCallback(async () => {
         if (!widgets || !ready) return;
 
@@ -86,7 +89,8 @@ const PaymentPage = () => {
             const orderName = orderItems.length > 1
                 ? `${orderItems[0].menuName} 외 ${orderItems.length - 1}건`  // name → menuName
                 : orderItems[0].menuName;  // name → menuName
-
+            // 토스페이먼츠 측에 실제 결제 요청 -> 사용자가 결제 절차를 성공적으로 완료시 successUrl로 이동
+            // 실패시 failUrl로 이동
             await widgets.requestPayment({
                 orderId: tossId,
                 orderName: orderName,

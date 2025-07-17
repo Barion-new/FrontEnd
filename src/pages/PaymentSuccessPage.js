@@ -48,33 +48,36 @@ const PaymentSuccessPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orderData]);
 
+
     // 주문 정보 백엔드로 전송하는 함수
     const submitOrder = async () => {
         // 전송할 데이터 구성
         const orderPayload = {
             storeId: 1,
             orderDate: new Date().toISOString(),
-            orderStatus: "COMPLETED", // 주문 상태 추가
-            totalAmount: orderData.totalPrice,
+            orderStatus: "COMPLETED", // 주문 상태 
+            totalAmount: orderData.totalPrice, // 총 결제 금액
             items: orderData.orderItems.map(item => ({
-                menuId: item.menuId,
-                menuName: item.menuName,
-                quantity: item.quantity,
-                unitPrice: item.price,
-                totalPrice: item.price * item.quantity
+                menuId: item.menuId, // 메뉴 ID
+                menuName: item.menuName, // 메뉴명
+                quantity: item.quantity, // 수량
+                unitPrice: item.price, // 단가
+                totalPrice: item.price * item.quantity // 총가격
             }))
         };
 
         try {
             console.log('주문 데이터 전송:', orderPayload);
 
-            // 백엔드로 주문 데이터 전송
+            // TODO: MARK: 【tosspayments 포인트 3】결제 완료 후 Spring Boot 백엔드 서버로 결제 및 주문정보 데이터 전송 파트. POST 요청
+            // 백엔드로 주문 데이터 전송 - RESTful API 통신
             const response = await fetch(`${API_BASE_URL}/api/orders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(orderPayload)
+                body: JSON.stringify(orderPayload) // ← MySQL DB에 저장될 주문 정보
+                // JavaScript 객체를 네트워크를 통해 전송 가능한 JSON 형식의 문자열로 변환
             });
 
             if (!response.ok) {

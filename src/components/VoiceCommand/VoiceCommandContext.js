@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useCallback } from 'react';
 
-// Context 생성
+// TODO: MARK: 【음성 주문시스템 포인트 1】 전역 Context로 음성 AI 시스템 관리
+// 키오스크 앱 전체에서 음성 명령을 사용할 수 있도록 Context API 활용
+// 음성 인식 상태, 명령 결과, 리스닝 상태 등을 전역적으로 관리
 const VoiceCommandContext = createContext(null);
 
 /**
