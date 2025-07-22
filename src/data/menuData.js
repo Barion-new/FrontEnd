@@ -1,5 +1,5 @@
 // API 기본 URL
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "http://13.209.76.64:8080";
 
 // 카테고리 데이터
 export const categories = [

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { playAudio } from '../utils/audioManager';
 import { useMqtt, TOPICS } from '../context/MqttContext'; // MQTT Context 추가
 // API 기본 URL
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "http://13.209.76.64:8080";
 
 const PaymentSuccessPage = () => {
     const navigate = useNavigate();
